@@ -18,7 +18,7 @@ body{
     padding: 5px;
     display: flex;
     flex-direction: column;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 .chat-footer {
@@ -29,41 +29,11 @@ body{
 .chat-input-field {
     max-height: 30vh;
     max-width: 85vw;
-    overflow-y: scroll;
+    overflow-y: auto;
     border: 2px solid grey;
     background-color: lightgray;
     padding: 2px;
     margin: 5px;
     border-radius: 10px;
     flex-grow: 1;
-
-}
-
-.chat-message {
-    align-self:flex-end;
-    width: fit-content;
-    display: flex;
-    flex-direction: column;
-    padding: 5px;
-    margin: 5px;
-    max-width: 40vw;
-    background: pink;
-    border-radius: 6px;
-}
-.chat-message-inner{
-    display: flex;
-    flex-direction: column;
-    margin-top: -10px;
-}
-.chat-message::before {
-    content: '';
-    margin-top: -5px;
-    /* margin-left: 100%;
-    border-bottom-right-radius: 100%; */
-    width: 15px;
-    height: 10px;
-    background-color: pink;
-
-    margin-left: -15px;
-    border-bottom-left-radius: 100%;
 }

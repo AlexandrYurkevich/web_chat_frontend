@@ -1,0 +1,32 @@
+body{
+    margin: 0;
+}
+
+.login-background {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background:linear-gradient(rgb(255, 54, 111), rgb(255, 179, 64));
+}
+.login-form{
+    padding: 5px;
+    gap: 5px;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 5px;
+}
+.loginorreg{
+    padding: 5px;
+    gap: 5px;
+    display: flex;
+    justify-content: center;
+}
+
+.coolbut {
+    color: white;
+    background-color: black;
+    border-radius: 5px;
+}
