@@ -20,7 +20,7 @@
     border-bottom-left-radius: 100%;
     width: 15px;
     height: 10px;
-    background-color: pink;
+    background-color: rgb(255, 239, 192);
 }
 
 .chat-message-my {
@@ -31,6 +31,7 @@
     margin-left: 100%;
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 100%;
+    background-color: pink;
 }
 
 .mes-message {

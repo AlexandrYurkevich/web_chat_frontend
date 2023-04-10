@@ -16,7 +16,7 @@ export default function Login() {
         }
         dispatch({ type: "LOGIN_START" });
         try {
-            const res = await axios.post("/login", {
+            const res = await axios.post("http://localhost:3001/auth/login", {
                 login: login,
                 password : password
             });
@@ -34,7 +34,7 @@ export default function Login() {
         }
         dispatch({ type: "REG_START" });
         try {
-            const res = await axios.post("auth/register", {
+            const res = await axios.post("http://localhost:3001/auth/register", {
                 login: login,
                 password : password
             });
