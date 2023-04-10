@@ -10,7 +10,7 @@ export default function Chat() {
     const [messageList, setMessageList] = useState([]);
     const scrollToLast = useRef();
 
-    function onSendMessage() {
+    const onSendMessage = async () => { 
         console.log("nessage to send: " + inputMessage);
         var now = (new Date);
 
@@ -19,9 +19,15 @@ export default function Chat() {
             text: inputMessage,
             sended: now.getHours() + ":" + now.getMinutes().toString().padStart(2, 0)
         };
-        setMessageList([...messageList, newMessage]);
-        setInputMessage("")
-        document.getElementsByClassName("chat-input-field")[0].innerText = ""
+
+        try {
+            const res = await axios.post("/messages", newMessage);
+            setMessageList([...messageList, res.data]);
+            setInputMessage("")
+            document.getElementsByClassName("chat-input-field")[0].innerText = ""
+        } catch (err) {
+            console.log(err);
+        }
     }
     function inputChange(e){
         setInputMessage(e.target.innerText);
@@ -30,7 +36,7 @@ export default function Chat() {
 
     useEffect(() => {
         scrollToLast.current?.scrollIntoView({ behavior: "smooth" });
-      }, [messageList]);
+    }, [messageList]);
 
     return (
         <div class="flex-container">
@@ -41,7 +47,7 @@ export default function Chat() {
             <div class="chat-content">
                 {messageList.map(message =>{
                     //if undefined userid =true
-                    var mes = <div ref={scrollToLast}><Message message={message} owner={true} turn={turn}/></div>;
+                    var mes = <div style={true ? {"align-self":"flex-end"} : ""} ref={scrollToLast}><Message message={message} owner={true} turn={turn}/></div>;
                     turn = false
                     return mes;
                 })}

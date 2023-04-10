@@ -24,7 +24,6 @@
 }
 
 .chat-message-my {
-    align-self:flex-end;
     background: pink;
 }
 
@@ -32,4 +31,8 @@
     margin-left: 100%;
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 100%;
+}
+
+.mes-message {
+    overflow-wrap: break-word;
 }

@@ -1,24 +1,41 @@
-import { createContext, useEffect, useReducer } from "react";
+import { createContext, useReducer } from "react";
 
 const WebReducer = (state, action) => {
   switch (action.type) {
     case "LOGIN_START":
       return {user: null,
-        isFetching: true,
+        isAuth: true,
         error: false,
       };
     case "LOGIN_SUCCESS":
       return {
         user: action.payload,
-        isFetching: false,
+        isAuth: false,
         error: false,
       };
     case "LOGIN_FAILURE":
       return {
         user: null,
-        isFetching: false,
+        isAuth: true,
         error: true,
       };
+      case "REG_START":
+        return {user: null,
+          isAuth: false,
+          error: false,
+        };
+      case "REG_SUCCESS":
+        return {
+          user: action.payload,
+          isAuth: false,
+          error: false,
+        };
+      case "REG_FAILURE":
+        return {
+          user: null,
+          isAuth: false,
+          error: true,
+        };
     default:
       return state;
   }
@@ -26,7 +43,7 @@ const WebReducer = (state, action) => {
 
 const start_state = {
   user: null,
-  isFetching: false,
+  isAuth: false,
   error: false
 };
 
@@ -39,7 +56,7 @@ export const ContextProvider = ({ children }) => {
     <WebContext.Provider
       value={{
         user: state.user,
-        isFetching: state.isFetching,
+        isAuth: state.isAuth,
         error: state.error,
         dispatch,
       }}
