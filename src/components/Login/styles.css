@@ -11,12 +11,19 @@ body{
     background:linear-gradient(rgb(255, 54, 111), rgb(255, 179, 64));
 }
 .login-form{
+    transform: scale(1.5);
     padding: 5px;
     gap: 5px;
     display: flex;
     flex-direction: column;
     background-color: white;
     border-radius: 5px;
+}
+.errLabel{
+    color: red;
+}
+.checkAccount{
+    display: flex;
 }
 .loginorreg{
     padding: 5px;

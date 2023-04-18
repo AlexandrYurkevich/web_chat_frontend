@@ -1,5 +1,6 @@
 body{
     margin: 0;
+    font-size: large;
 }
 
 .flex-container {
@@ -12,6 +13,10 @@ body{
     justify-content: center;
     background-color: antiquewhite;
 }
+.logout{
+    justify-self: flex-end;
+}
+
 .chat-content{
     background:linear-gradient(rgb(255, 54, 111), rgb(255, 179, 64));
     flex-grow: 1;

@@ -10,7 +10,7 @@ const App = () => {
         <BrowserRouter>
             <Routes>
                 <Route exact path="/" element={
-                    user ? <Chat /> : <Login/>
+                    user ? <Navigate to="/chat" /> : <Navigate to="/login" />
                 }
                 />
                 <Route path="/login" element={

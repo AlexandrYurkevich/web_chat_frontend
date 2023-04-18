@@ -12,21 +12,22 @@ export default function Chat() {
     const [messageList, setMessageList] = useState([]);
     const scrollToLast = useRef();
     const socket = useRef();
-    const { user } = useContext(WebContext)
+    const { user, dispatch } = useContext(WebContext)
     var turn = true;
     var currentLast = user._id;
 
     useEffect(() => {
-        setMessageList([...messageList, sendedMessage]);
+        sendedMessage && sendedMessage.sender != user._id && setMessageList([...messageList, sendedMessage]);
     }, [sendedMessage]);
 
     useEffect(() => {
-        // socket.current = io("http://localhost:8002");
-        // socket.current.on("getMessage", (data) => { setSendedMessage(data); });
+        socket.current = io("ws://localhost:3002");
+        socket.current.on("getMessage", (data) => { setSendedMessage(data); });
 
         const getMessages = async () => {
             try {
                 const res = await axios.get("http://localhost:3001/messages/");
+                console.log("getMessages " + res);
                 setMessageList(res.data);
             } catch (err) {
                 console.log(err);
@@ -50,7 +51,7 @@ export default function Chat() {
             setMessageList([...messageList, res.data]);
             setInputMessage("")
             document.getElementsByClassName("chat-input-field")[0].innerText = ""
-            //socket.current.emit("sendMessage",  res.data);
+            socket.current.emit("sendMessage",  res.data);
         } catch (err) {
             console.log(err);
         }
@@ -67,19 +68,19 @@ export default function Chat() {
     return (
         <div class="flex-container">
             <div class="chat-header">
-                {/* <img src="" alt="some icon"/> */}
-                <label id="chat-name"></label>
+                <label>{user.login}</label>
+                <button class="logout" onClick={dispatch({ type: "LOGIN_START"})}>Logout</button>
             </div>
             <div class="chat-content">
                 {messageList.map(message =>{
-                    if(currentLast !== user._id && turn === false){
-                        currentLast = user._id
+                    if(currentLast !== message.sender && turn === false){
                         turn = true;
                     }
-                    console.log("user id " + user._id);
-                    var isOwner = (user._id == message.sender)
-                    console.log(user._id  + ", " + message.sender + " " + isOwner);
-                    var mes = <div style={ "" + ((user._id == message.sender) ? {"align-self":"flex-end"} : "") } ref={scrollToLast}><Message message={message} owner={isOwner} turn={turn}/></div>;
+                    currentLast = message.sender
+                    let isOwner = (user._id == message.sender)
+                    let mes = <div style={ isOwner ? { 'align-self':'flex-end'} : {'align-self':'flex-start'} } ref={scrollToLast}>
+                        <Message message={message} owner={isOwner} turn={turn}/>
+                    </div>;
                     turn = false
                     return mes;
                 })}

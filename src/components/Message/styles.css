@@ -23,6 +23,11 @@
     background-color: rgb(255, 239, 192);
 }
 
+.notail.chat-message::before {
+    content: '';
+    margin-top: 5px;
+}
+
 .chat-message-my {
     background: pink;
 }
@@ -34,6 +39,6 @@
     background-color: pink;
 }
 
-.mes-message {
+label {
     overflow-wrap: break-word;
 }

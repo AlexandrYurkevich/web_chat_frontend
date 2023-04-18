@@ -41,8 +41,9 @@ const WebReducer = (state, action) => {
   }
 };
 
+console.log(JSON.parse(localStorage.getItem("user")));
 const start_state = {
-  user: null,
+  user: JSON.parse(localStorage.getItem("user")) || null,
   isAuth: false,
   error: false
 };
@@ -58,7 +59,7 @@ export const ContextProvider = ({ children }) => {
         user: state.user,
         isAuth: state.isAuth,
         error: state.error,
-        dispatch,
+        dispatch
       }}
     >
       {children}
