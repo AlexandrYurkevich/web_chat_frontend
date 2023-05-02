@@ -10,11 +10,14 @@ body{
 }
 .chat-header{
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     background-color: antiquewhite;
 }
 .logout{
-    justify-self: flex-end;
+    color:white;
+    background: black;
+    border-radius: 10px;
+    margin: 2px;
 }
 
 .chat-content{

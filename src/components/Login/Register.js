@@ -5,24 +5,20 @@ import axios from "axios";
 import { WebContext } from "../../WebContext";
 
 
-// salt, model limits, logout, jsonparse
-// 404, strictmode, login save, checkaccount
-export default function Login() {
+export default function Register() {
     const login = useRef();
     const password = useRef(); 
     const { setUser } = useContext(WebContext);
-    const [saveUserCheck, setSaveUserCheck] = useState(false);
+    const saveUserCheck = useRef();
 
     const navigate = useNavigate();
 
-    const tryLogin = async () => {
-
+    const tryRegister = async () => {
         try {
-            const res = await axios.post("http://localhost:3001/auth/login", {
+            const res = await axios.post("http://localhost:3001/auth/register", {
                 login: login.current.value,
                 password : password.current.value
             });
-            console.log("auth successed");
             if(saveUserCheck){
                 console.log("login is saved");
                 localStorage.setItem("chat-user", JSON.stringify(res.data))
@@ -31,13 +27,12 @@ export default function Login() {
             setUser(res.data);
         }
         catch (err) {
-            login.current.setCustomValidity(err.message);
+            login.current.setCustomValidity(err);
         }
     }
-
     return (
         <div className="login-background">
-            <form className="login-form" onSubmit={(e)=> {e.preventDefault(); tryLogin()}}>
+            <form className="login-form" onSubmit={(e)=>{e.preventDefault(); tryRegister()}}>
                 <label style={{'align-self':'center'}}>Authorization</label>
                 <input
                     type="text"
@@ -53,12 +48,12 @@ export default function Login() {
                     ref={password}
                 />
                 <div className="checkAccount">
-                    <input type="checkbox" onChange={(e)=>setSaveUserCheck(!saveUserCheck)}/>
+                    <input type="checkbox" ref={saveUserCheck}/>
                     <label>Remember me?</label>
                 </div>
                 <div className="loginorreg">
-                    <input className="coolbut" type="submit" value="Authorize"/>
-                    <input className="coolbut" type="button" onClick={()=> navigate("/register")} value="Register"/>
+                    <input className="coolbut" type="submit" value="Register"/>
+                    <input className="coolbut" type="button" onClick={()=> navigate("/login")} value="Authorize"/>
                 </div>
             </form>
         </div>
