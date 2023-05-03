@@ -36,7 +36,7 @@ export default function Chat() {
     useEffect(()=> {
         if(!deletedMessage)
             return;
-        let filteredMessages = messageList.filter((msg) => msg._id !== selectedMessage);
+        let filteredMessages = messageList.filter((msg) => msg._id !== deletedMessage);
         setMessageList(filteredMessages);
     }, [deletedMessage]);
 
@@ -72,8 +72,7 @@ export default function Chat() {
 
         const newMessage = {
             sender: user.login,
-            text: inputMessage,
-            sended: now.getHours() + ":" + now.getMinutes().toString().padStart(2, 0)
+            text: inputMessage
         };
         try {
             const res = await axios.post("http://localhost:3001/messages/", newMessage);
@@ -101,6 +100,8 @@ export default function Chat() {
     }
 
     const onUpdate = async () =>{
+        if(!inputMessage)
+            return;
         const selected = messageList.find((mes) => mes._id == selectedMessage)
         console.log("selected mes is " + selected._id);
         const updatedMessage = {...selected, text: inputMessage }
@@ -120,13 +121,13 @@ export default function Chat() {
     }, [messageList]);
 
     return (
-        <div class="flex-container">
-            <div class="chat-header">
+        <div className="flex-container">
+            <div className="chat-header">
                 <div></div>
                 <label>You're authorized as {user.login}</label>
-                <button class="logout" onClick={()=>setUser(null)}>Logout</button>
+                <button className="logout" onClick={()=>setUser(null)}>Logout</button>
             </div>
-            <div class="chat-content">
+            <div className="chat-content">
                 {messageList.map(message =>{
                     if(currentLast !== message.sender && turn === false){
                         turn = true;
@@ -148,9 +149,9 @@ export default function Chat() {
                     return mes;
                 })}
             </div>
-            <div class="chat-footer">
+            <div className="chat-footer">
                 {/* <textarea class="chat-input-field" value={inputMessage} onChange={(e) => setInputMessage(e.target.value)} /> */}
-                <div class="chat-input-field" role="textbox" aria-multiline="true" contenteditable="true" onInput={(e)=> setInputMessage(e.target.innerText)}></div>
+                <div className="chat-input-field" role="textbox" aria-multiline="true" contenteditable="true" onInput={(e)=> setInputMessage(e.target.innerText)}></div>
                 <input type="image" src={sendIcon} alt="send" style={{height:5 + 'vh'}} onClick={()=> onSendMessage()}/>
                 {selectedMessage ? 
                 <div

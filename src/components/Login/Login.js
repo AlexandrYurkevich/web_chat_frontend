@@ -31,7 +31,8 @@ export default function Login() {
             setUser(res.data);
         }
         catch (err) {
-            login.current.setCustomValidity(err.message);
+            console.log(err.response.data.message);
+            login.current.setCustomValidity(err.response.data.message);
         }
     }
 
@@ -39,15 +40,15 @@ export default function Login() {
         <div className="login-background">
             <form className="login-form" onSubmit={(e)=> {e.preventDefault(); tryLogin()}}>
                 <label style={{'align-self':'center'}}>Authorization</label>
+                <label>Login</label>
                 <input
                     type="text"
-                    placeholder="Login"
                     required
                     ref={login}
                 />
+                <label>Password</label>
                 <input
                     type="password"
-                    placeholder="Password"
                     required
                     minLength={6}
                     ref={password}
