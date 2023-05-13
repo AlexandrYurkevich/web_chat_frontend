@@ -9,7 +9,8 @@ export default function Register() {
     const login = useRef();
     const password = useRef(); 
     const { setUser } = useContext(WebContext);
-    const saveUserCheck = useRef();
+    const [saveUserCheck, setSaveUserCheck] = useState(false);
+    const [errormes, setErrormes] = useState();
 
     const navigate = useNavigate();
 
@@ -27,13 +28,14 @@ export default function Register() {
             setUser(res.data);
         }
         catch (err) {
-            login.current.setCustomValidity(err.response.data.message);
+            setErrormes(err.response.data.message);
         }
     }
     return (
         <div className="login-background">
             <form className="login-form" onSubmit={(e)=>{e.preventDefault(); tryRegister()}}>
                 <label style={{'align-self':'center'}}>Registration</label>
+                <label style={{color: 'red'}}>{errormes}</label>
                 <label>Login</label>
                 <input
                     type="text"
@@ -48,7 +50,7 @@ export default function Register() {
                     ref={password}
                 />
                 <div className="checkAccount">
-                    <input type="checkbox" ref={saveUserCheck}/>
+                    <input type="checkbox" onChange={(e)=>setSaveUserCheck(!saveUserCheck)}/>
                     <label>Remember me?</label>
                 </div>
                 <div className="loginorreg">

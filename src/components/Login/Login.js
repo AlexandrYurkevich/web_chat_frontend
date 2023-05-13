@@ -12,6 +12,7 @@ export default function Login() {
     const password = useRef(); 
     const { setUser } = useContext(WebContext);
     const [saveUserCheck, setSaveUserCheck] = useState(false);
+    const [errormes, setErrormes] = useState();
 
     const navigate = useNavigate();
 
@@ -31,8 +32,7 @@ export default function Login() {
             setUser(res.data);
         }
         catch (err) {
-            console.log(err.response.data.message);
-            login.current.setCustomValidity(err.response.data.message);
+            setErrormes(err.response.data.message);
         }
     }
 
@@ -40,6 +40,7 @@ export default function Login() {
         <div className="login-background">
             <form className="login-form" onSubmit={(e)=> {e.preventDefault(); tryLogin()}}>
                 <label style={{'align-self':'center'}}>Authorization</label>
+                <label style={{color: 'red'}}>{errormes}</label>
                 <label>Login</label>
                 <input
                     type="text"
